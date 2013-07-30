@@ -45,7 +45,7 @@ namespace Socialet.Views
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             // TODO: Assign a bindable collection of items to this.DefaultViewModel["Items"]
-            DefaultViewModel["Items"] = socialNetworks;
+            this.DefaultViewModel["Items"] = socialNetworks;
         }
     }
 }

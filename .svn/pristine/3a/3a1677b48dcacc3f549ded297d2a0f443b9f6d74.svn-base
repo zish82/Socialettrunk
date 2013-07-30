@@ -1,0 +1,13 @@
+﻿namespace Socialet.ViewModels
+{
+    public class FaceBookViewModel : SocialNetworkViewModel
+    {
+        //private Twitter twitter;
+
+        public FaceBookViewModel()
+        {
+            Title = "facebuch";
+            //twitter = new Twitter("my tweet");
+        }
+    }
+}
