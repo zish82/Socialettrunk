@@ -14,17 +14,17 @@ namespace Socialet.ViewModels.Twitter
 {
     public class TwitterOAuth : OpenAuthenticate
     {
-        private readonly ISendData oAuth;
-        private const string consumerKey = "r1r5jqDS2KEbgvFhxS6dg";
+        private const string ConsumerKey = "r1r5jqDS2KEbgvFhxS6dg";
         private const string ConsumerSecret = "1ufWtkJWibOUbGYDolKnlZr6HqxYmznUvAUpz6Hu3c";
-        private static String requestTokenUrl = "https://api.twitter.com/oauth/request_token";
-        private static String accessTokenUrl = "https://api.twitter.com/oauth/access_token";
-        private string oauth_token;
-        private string oauth_token_secret;
-        private string accessToken;
         private const string SignatureMethod = "HMAC-SHA1";
-        private const String twitterCallbackUrl = "https://192.168.1.1/oauth/callback";
+        private const String TwitterCallbackUrl = "https://192.168.1.1/oauth/callback";
         private const string AuthVersion = "1.0";
+        private static String requestTokenUrl = "https://api.twitter.com/oauth/request_token";
+        private const String AccessTokenUrl = "https://api.twitter.com/oauth/access_token";
+        private readonly ISendData oAuth;
+        private string accessToken;
+        private string oauthToken;
+        private string oauthTokenSecret;
 
         public TwitterOAuth(ISendData oAuth)
         {
@@ -37,54 +37,50 @@ namespace Socialet.ViewModels.Twitter
             {
                 var sigBaseStringParams = GetSigBaseStringParams();
                 var sigBaseString = GetSigBaseString();
-
                 var signature = GetAuthSignature(sigBaseString);
-
-
+                
                 requestTokenUrl += "?" + sigBaseStringParams + "&oauth_signature=" + Uri.EscapeDataString(signature);
 
-                String getResponse = await oAuth.SendDataAsync(requestTokenUrl);
+                var getResponse = await oAuth.SendDataAsync(requestTokenUrl);
 
                 if (getResponse != null)
                 {
-                    oauth_token = null;
-                    oauth_token_secret = null;
-                    String[] keyValPairs = getResponse.Split('&');
+                    oauthToken = null;
+                    oauthTokenSecret = null;
+                    var keyValPairs = getResponse.Split('&');
 
-                    foreach (string parameter in keyValPairs)
+                    foreach (var parameter in keyValPairs)
                     {
-                        String[] splits = parameter.Split('=');
+                        var splits = parameter.Split('=');
                         switch (splits[0])
                         {
                             case "oauth_token":
-                                oauth_token = splits[1];
+                                oauthToken = splits[1];
                                 break;
                             case "oauth_token_secret":
-                                oauth_token_secret = splits[1];
+                                oauthTokenSecret = splits[1];
                                 break;
                         }
                     }
 
-                    if (oauth_token != null)
+                    if (oauthToken != null)
                     {
-
-                        requestTokenUrl = "https://api.twitter.com/oauth/authorize?oauth_token=" + oauth_token;
+                        requestTokenUrl = "https://api.twitter.com/oauth/authorize?oauth_token=" + oauthToken;
                         var startUri = new Uri(requestTokenUrl);
-                        var endUri = new Uri(twitterCallbackUrl);
+                        var endUri = new Uri(TwitterCallbackUrl);
 
-                        WebAuthenticationResult WebAuthenticationResult =
-                            await WebAuthenticationBroker.AuthenticateAsync(
+                        var webAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(
                                 WebAuthenticationOptions.None,
                                 startUri,
                                 endUri);
-                        if (WebAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
+                        if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
                         {
                             string authVerifier = null;
-                            String[] AccessTokenkeyValPairs = WebAuthenticationResult.ResponseData.Split('&');
+                            var accessTokenkeyValPairs = webAuthenticationResult.ResponseData.Split('&');
 
-                            foreach (string parameter in AccessTokenkeyValPairs)
+                            foreach (string parameter in accessTokenkeyValPairs)
                             {
-                                String[] splits = parameter.Split('=');
+                                var splits = parameter.Split('=');
                                 switch (splits[0])
                                 {
                                     case "oauth_verifier":
@@ -92,11 +88,11 @@ namespace Socialet.ViewModels.Twitter
                                         break;
                                 }
                             }
-                            var accessTokenResult = await GetAccessToken(oauth_token, authVerifier);
-                            oauth_token = accessTokenResult.Dictionary["oauth_token_secret"];
+                            TwitterPostResults accessTokenResult = await GetAccessToken(oauthToken, authVerifier);
+                            oauthToken = accessTokenResult.Dictionary["oauth_token_secret"];
                             accessToken = accessTokenResult.Dictionary["oauth_token_secret"];
                         }
-                        else if (WebAuthenticationResult.ResponseStatus == WebAuthenticationStatus.ErrorHttp)
+                        else if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.ErrorHttp)
                         {
                             // OutputToken("HTTP Error returned by AuthenticateAsync() : " + WebAuthenticationResult.ResponseErrorDetail.ToString());
                         }
@@ -122,10 +118,6 @@ namespace Socialet.ViewModels.Twitter
         {
             //oauth_token = "66644379-Ig1ctJ9mMlMIcTdGkhbRfSPF0PAWeTu90wriHoIfJ";
             //oauth_token_secret = "EwiEa9jbFwx1BZuHp0HiL2bRFmlS46lFq1Q1LkfAaM";
-
-
-
-
             const string resourceUrl = "https://api.twitter.com/1.1/statuses/update.json";
             const string status = "dash Updating status via REST API if this works";
 
@@ -133,27 +125,27 @@ namespace Socialet.ViewModels.Twitter
                                       "&oauth_timestamp={3}&oauth_token={4}&oauth_version={5}&status={6}";
 
             var oauthNonce = new Random().Next(Int32.MaxValue).ToString();
-            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            var oauth_timestamp = Convert.ToInt64(ts.TotalSeconds).ToString();
+            var ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            var oauthTimestamp = Convert.ToInt64(ts.TotalSeconds).ToString();
             var baseString = string.Format(baseFormat,
-                                        consumerKey,
-                                        oauthNonce,
-                                        SignatureMethod,
-                                        oauth_timestamp,
-                                        oauth_token,
-                                        AuthVersion,
-                                        Uri.EscapeDataString(status)
-                                        );
+                                              ConsumerKey,
+                                              oauthNonce,
+                                              SignatureMethod,
+                                              oauthTimestamp,
+                                              oauthToken,
+                                              AuthVersion,
+                                              Uri.EscapeDataString(status)
+                );
 
             baseString = string.Concat("POST&", Uri.EscapeDataString(resourceUrl), "&", Uri.EscapeDataString(baseString));
             string signingKey = Uri.EscapeDataString(ConsumerSecret) + "&" + Uri.EscapeDataString(accessToken);
-            IBuffer keyMaterial = CryptographicBuffer.ConvertStringToBinary(signingKey, BinaryStringEncoding.Utf8);
+            var keyMaterial = CryptographicBuffer.ConvertStringToBinary(signingKey, BinaryStringEncoding.Utf8);
 
-            MacAlgorithmProvider hmacSha1Provider = MacAlgorithmProvider.OpenAlgorithm("HMAC_SHA1");
-            CryptographicKey macKey = hmacSha1Provider.CreateKey(keyMaterial);
-            IBuffer dataToBeSigned = CryptographicBuffer.ConvertStringToBinary(baseString, BinaryStringEncoding.Utf8);
-            IBuffer signatureBuffer = CryptographicEngine.Sign(macKey, dataToBeSigned);
-            String signature = CryptographicBuffer.EncodeToBase64String(signatureBuffer);
+            var hmacSha1Provider = MacAlgorithmProvider.OpenAlgorithm("HMAC_SHA1");
+            var macKey = hmacSha1Provider.CreateKey(keyMaterial);
+            var dataToBeSigned = CryptographicBuffer.ConvertStringToBinary(baseString, BinaryStringEncoding.Utf8);
+            var signatureBuffer = CryptographicEngine.Sign(macKey, dataToBeSigned);
+            var signature = CryptographicBuffer.EncodeToBase64String(signatureBuffer);
 
             //creating header
             const string headerFormat = "OAuth oauth_consumer_key=\"{0}\", oauth_nonce=\"{1}\", " +
@@ -162,17 +154,17 @@ namespace Socialet.ViewModels.Twitter
                                         "oauth_version=\"{6}\"";
 
             var authHeader = string.Format(headerFormat,
-                                    Uri.EscapeDataString(consumerKey),
-                                    Uri.EscapeDataString(oauthNonce),
-                                    Uri.EscapeDataString(signature),
-                                    Uri.EscapeDataString(SignatureMethod),
-                                    Uri.EscapeDataString(oauth_timestamp),
-                                    Uri.EscapeDataString(oauth_token),
-                                    Uri.EscapeDataString(AuthVersion)
-                            );
+                                              Uri.EscapeDataString(ConsumerKey),
+                                              Uri.EscapeDataString(oauthNonce),
+                                              Uri.EscapeDataString(signature),
+                                              Uri.EscapeDataString(SignatureMethod),
+                                              Uri.EscapeDataString(oauthTimestamp),
+                                              Uri.EscapeDataString(oauthToken),
+                                              Uri.EscapeDataString(AuthVersion)
+                );
 
             var postBody = "status=" + Uri.EscapeDataString(status);
-            var result = PostData(resourceUrl, authHeader, postBody);
+            Task<TwitterPostResults> result = PostData(resourceUrl, authHeader, postBody);
             //var httpClient = new HttpClient();
             ////httpClient.BaseAddress = new Uri(resourceUrl);
             //httpClient.DefaultRequestHeaders.ExpectContinue = false;
@@ -186,56 +178,56 @@ namespace Socialet.ViewModels.Twitter
             //var httpResponseMessage = response.Result;
             //var isSuccessStatusCode = httpResponseMessage.IsSuccessStatusCode;
             //var result = PostData(resourceUrl, postBody);
-
         }
 
-        async Task<TwitterPostResults> PostData(String url, String headers, String requestData = null)
+        private async Task<TwitterPostResults> PostData(String url, String headers, String requestData = null)
         {
             try
             {
                 //var postBody = "screen_name=" + Uri.EscapeDataString("zish");//
 
-                HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(url);
-                Request.Method = "POST";
-                Request.Headers["Authorization"] = headers;
-                Request.ContentType = "application/x-www-form-urlencoded";
+                var request = (HttpWebRequest) WebRequest.Create(url);
+                request.Method = "POST";
+                request.Headers["Authorization"] = headers;
+                request.ContentType = "application/x-www-form-urlencoded";
 
                 if (!String.IsNullOrEmpty(requestData))
                 {
-                    using (StreamWriter RequestDataStream = new StreamWriter(await Request.GetRequestStreamAsync()))
+                    using (var requestDataStream = new StreamWriter(await request.GetRequestStreamAsync()))
                     {
-                        await RequestDataStream.WriteAsync(requestData);
+                        await requestDataStream.WriteAsync(requestData);
                     }
                 }
 
-                HttpWebResponse Response = (HttpWebResponse)await Request.GetResponseAsync();
-
-                if (Response.StatusCode != HttpStatusCode.OK)
+                using (var Response = (HttpWebResponse) await request.GetResponseAsync())
                 {
-                    return new TwitterPostResults
+                    if (Response.StatusCode != HttpStatusCode.OK)
                     {
-                        Status = TwitterPostResults.EStatus.Error,
-                        Description = Response.StatusDescription
-                    };
-                }
+                        return new TwitterPostResults
+                            {
+                                Status = TwitterPostResults.EStatus.Error,
+                                Description = Response.StatusDescription
+                            };
+                    }
 
-                using (StreamReader ResponseDataStream = new StreamReader(Response.GetResponseStream()))
-                {
-                    var response = await ResponseDataStream.ReadToEndAsync();
-                    return new TwitterPostResults
+                    using (var ResponseDataStream = new StreamReader(Response.GetResponseStream()))
                     {
-                        Status = TwitterPostResults.EStatus.Success,
-                        Dictionary = new TwitterDictionary(response)
-                    };
+                        var response = await ResponseDataStream.ReadToEndAsync();
+                        return new TwitterPostResults
+                            {
+                                Status = TwitterPostResults.EStatus.Success,
+                                Dictionary = new TwitterDictionary(response)
+                            };
+                    }
                 }
             }
             catch (Exception e)
             {
                 return new TwitterPostResults
-                {
-                    Status = TwitterPostResults.EStatus.Error,
-                    Description = e.Message,
-                };
+                    {
+                        Status = TwitterPostResults.EStatus.Error,
+                        Description = e.Message,
+                    };
             }
         }
 
@@ -244,15 +236,15 @@ namespace Socialet.ViewModels.Twitter
         {
             try
             {
-                HttpClient httpClient = new HttpClient();
+                var httpClient = new HttpClient();
                 httpClient.MaxResponseContentBufferSize = int.MaxValue;
                 httpClient.DefaultRequestHeaders.ExpectContinue = false;
-                HttpRequestMessage requestMsg = new HttpRequestMessage();
+                var requestMsg = new HttpRequestMessage();
                 requestMsg.Content = new StringContent(postData);
                 requestMsg.Method = new HttpMethod("POST");
                 requestMsg.RequestUri = new Uri(url, UriKind.Absolute);
                 requestMsg.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-                var response = await httpClient.SendAsync(requestMsg);
+                HttpResponseMessage response = await httpClient.SendAsync(requestMsg);
                 return await response.Content.ReadAsStringAsync();
             }
             catch (Exception Err)
@@ -263,19 +255,20 @@ namespace Socialet.ViewModels.Twitter
 
         private string GetAuthSignature(string sigBaseString)
         {
-            IBuffer keyMaterial = CryptographicBuffer.ConvertStringToBinary(ConsumerSecret + "&", BinaryStringEncoding.Utf8);
-            MacAlgorithmProvider hmacSha1Provider = MacAlgorithmProvider.OpenAlgorithm("HMAC_SHA1");
-            CryptographicKey macKey = hmacSha1Provider.CreateKey(keyMaterial);
-            IBuffer dataToBeSigned = CryptographicBuffer.ConvertStringToBinary(sigBaseString, BinaryStringEncoding.Utf8);
-            IBuffer signatureBuffer = CryptographicEngine.Sign(macKey, dataToBeSigned);
-            String signature = CryptographicBuffer.EncodeToBase64String(signatureBuffer);
+            var keyMaterial = CryptographicBuffer.ConvertStringToBinary(ConsumerSecret + "&",
+                                                                            BinaryStringEncoding.Utf8);
+            var hmacSha1Provider = MacAlgorithmProvider.OpenAlgorithm("HMAC_SHA1");
+            var macKey = hmacSha1Provider.CreateKey(keyMaterial);
+            var dataToBeSigned = CryptographicBuffer.ConvertStringToBinary(sigBaseString, BinaryStringEncoding.Utf8);
+            var signatureBuffer = CryptographicEngine.Sign(macKey, dataToBeSigned);
+            var signature = CryptographicBuffer.EncodeToBase64String(signatureBuffer);
             return signature;
         }
 
         private string GetSigBaseStringParams()
         {
-            String sigBaseStringParams = "oauth_callback=" + Uri.EscapeDataString(twitterCallbackUrl);
-            sigBaseStringParams += "&" + "oauth_consumer_key=" + consumerKey;
+            var sigBaseStringParams = "oauth_callback=" + Uri.EscapeDataString(TwitterCallbackUrl);
+            sigBaseStringParams += "&" + "oauth_consumer_key=" + ConsumerKey;
             sigBaseStringParams += "&" + "oauth_nonce=" + GetNonce();
             sigBaseStringParams += "&" + "oauth_signature_method=" + SignatureMethod.Replace('_', '-');
             sigBaseStringParams += "&" + "oauth_timestamp=" + Math.Round(GetSinceEpoch().TotalSeconds);
@@ -292,38 +285,47 @@ namespace Socialet.ViewModels.Twitter
             //
 
             var sigBaseString = "GET&";
-            sigBaseString += Uri.EscapeDataString(requestTokenUrl) + "&" + Uri.EscapeDataString(GetSigBaseStringParams());
+            sigBaseString += Uri.EscapeDataString(requestTokenUrl) + "&" +
+                             Uri.EscapeDataString(GetSigBaseStringParams());
             return sigBaseString;
         }
 
-        async Task<TwitterPostResults> GetAccessToken(String oauthToken, String oauthVerifier)
+        private async Task<TwitterPostResults> GetAccessToken(String oauthToken, String oauthVerifier)
         {
-            var header = new TwitterDictionary();
-            header.Add("oauth_consumer_key", consumerKey);
-            header.Add("oauth_nonce", GetNonce());
-            header.Add("oauth_signature_method", SignatureMethod);
-            header.Add("oauth_timestamp", Math.Round(GetSinceEpoch().TotalSeconds).ToString());
-            header.Add("oauth_token", oauthToken);
-            header.Add("oauth_version", AuthVersion);
+            var header = new TwitterDictionary
+                {
+                    {"oauth_consumer_key", ConsumerKey},
+                    {"oauth_nonce", GetNonce()},
+                    {"oauth_signature_method", SignatureMethod},
+                    {"oauth_timestamp", Math.Round(GetSinceEpoch().TotalSeconds).ToString()},
+                    {"oauth_token", oauthToken},
+                    {"oauth_version", AuthVersion}
+                };
             var request = new TwitterDictionary();
             request.Add("oauth_verifier", Uri.EscapeDataString(oauthVerifier));
-            return await PostData(accessTokenUrl, header, request);  // should contain oauth_token, oauth_token_secret, user_id, and screen_name
+            return await PostData(AccessTokenUrl, header, request);
+                // should contain oauth_token, oauth_token_secret, user_id, and screen_name
         }
 
-        async Task<TwitterPostResults> PostData(String url, TwitterDictionary headerDictionary, TwitterDictionary requestDictionary = null)
+        private async Task<TwitterPostResults> PostData(String url, TwitterDictionary headerDictionary,
+                                                        TwitterDictionary requestDictionary = null)
         {
             // See https://dev.twitter.com/docs/auth/creating-signature
             var combinedDictionaries = new TwitterDictionary(headerDictionary);
             combinedDictionaries.Add(requestDictionary);
-            var signatureBase = "POST&" + Uri.EscapeDataString(url) + "&" + Uri.EscapeDataString(combinedDictionaries.ToStringA());
-            var keyMaterial = CryptographicBuffer.ConvertStringToBinary(ConsumerSecret + "&" + oauth_token_secret, BinaryStringEncoding.Utf8);
+            var signatureBase = "POST&" + Uri.EscapeDataString(url) + "&" +
+                                   Uri.EscapeDataString(combinedDictionaries.ToStringA());
+            var keyMaterial = CryptographicBuffer.ConvertStringToBinary(ConsumerSecret + "&" + oauthTokenSecret,
+                                                                            BinaryStringEncoding.Utf8);
             var algorithm = MacAlgorithmProvider.OpenAlgorithm("HMAC_SHA1");
             var key = algorithm.CreateKey(keyMaterial);
             var dataToBeSigned = CryptographicBuffer.ConvertStringToBinary(signatureBase, BinaryStringEncoding.Utf8);
             var signatureBuffer = CryptographicEngine.Sign(key, dataToBeSigned);
             var signature = CryptographicBuffer.EncodeToBase64String(signatureBuffer);
-            var headers = "OAuth " + headerDictionary.ToStringQ() + ", oauth_signature=\"" + Uri.EscapeDataString(signature) + "\"";
-            return await PostData(url, headers, (requestDictionary == null) ? String.Empty : requestDictionary.ToString());
+            var headers = "OAuth " + headerDictionary.ToStringQ() + ", oauth_signature=\"" +
+                             Uri.EscapeDataString(signature) + "\"";
+            return
+                await PostData(url, headers, (requestDictionary == null) ? String.Empty : requestDictionary.ToString());
         }
     }
 }
