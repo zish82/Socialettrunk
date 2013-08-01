@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>ZISH</Machine>
+    <WindowsUser>Zeeshan</WindowsUser>
+    <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <RegisteredManifestChecksum>1306E1C0F6EE0422AA5A0CDBC6C2FE62C8A56CD3D326AF7A288B27A83884236A</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>0e1d5608-2c80-4d7f-998a-3891e8e84cde_1.0.0.0_neutral__bmznbps36svze</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>0e1d5608-2c80-4d7f-998a-3891e8e84cde_bmznbps36svze!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>0e1d5608-2c80-4d7f-998a-3891e8e84cde</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=Zeeshan</RegisteredPackagePublisher>
+    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\bin\Debug\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2013-07-31T19:27:45.940</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\bin\Debug\Socialet.exe">
+      <PackagePath>Socialet.exe</PackagePath>
+      <Modified>2013-07-31T19:33:57.130</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\bin\Debug\Socialet.pdb">
+      <PackagePath>Socialet.pdb</PackagePath>
+      <Modified>2013-07-31T19:33:57.106</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\Assets\Logo.png">
+      <PackagePath>Assets\Logo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2013-07-30T21:06:13.249</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\Assets\SmallLogo.png">
+      <PackagePath>Assets\SmallLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2013-07-30T21:06:13.202</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\Assets\SplashScreen.png">
+      <PackagePath>Assets\SplashScreen.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2013-07-30T21:06:13.233</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\Assets\StoreLogo.png">
+      <PackagePath>Assets\StoreLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2013-07-30T21:06:13.233</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\Assets\LightGray.png">
+      <PackagePath>Assets\LightGray.png</PackagePath>
+      <Modified>2013-07-30T21:06:13.233</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\Assets\MediumGray.png">
+      <PackagePath>Assets\MediumGray.png</PackagePath>
+      <Modified>2013-07-30T21:06:13.249</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\Assets\DarkGray.png">
+      <PackagePath>Assets\DarkGray.png</PackagePath>
+      <Modified>2013-07-30T21:06:13.249</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\bin\Debug\App.xaml">
+      <PackagePath>App.xaml</PackagePath>
+      <Modified>2013-07-30T21:06:14.356</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\bin\Debug\Common\StandardStyles.xaml">
+      <PackagePath>Common\StandardStyles.xaml</PackagePath>
+      <Modified>2013-07-30T21:06:12.827</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\bin\Debug\GroupedItemsPage.xaml">
+      <PackagePath>GroupedItemsPage.xaml</PackagePath>
+      <Modified>2013-07-30T21:06:13.451</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\bin\Debug\GroupDetailPage.xaml">
+      <PackagePath>GroupDetailPage.xaml</PackagePath>
+      <Modified>2013-07-30T21:06:14.356</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\bin\Debug\ItemDetailPage.xaml">
+      <PackagePath>ItemDetailPage.xaml</PackagePath>
+      <Modified>2013-07-30T21:06:14.356</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\bin\Debug\Views\SocialMediaList.xaml">
+      <PackagePath>Views\SocialMediaList.xaml</PackagePath>
+      <Modified>2013-07-30T22:51:24.719</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\My Documents\Visual Studio 2012\Socialettrunk\Socialet\bin\Debug\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <Modified>2013-07-31T19:27:45.661</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>

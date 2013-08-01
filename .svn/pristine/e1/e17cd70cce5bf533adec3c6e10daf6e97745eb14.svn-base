@@ -101,10 +101,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\ClientLibrary\ClientLibrary.csproj">
-      <Project>{12f2d0ee-c264-4e31-b7a7-0c0735f67d1a}</Project>
-      <Name>ClientLibrary</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -130,16 +126,10 @@
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\FaceBookViewModel.cs" />
-    <Compile Include="ViewModels\OAuthenticate\ISendData.cs" />
     <Compile Include="ViewModels\TwitterViewModel.cs" />
     <Compile Include="ViewModels\ISocialNetworkViewModel.cs" />
     <Compile Include="ViewModels\SocialNetworkViewModel.cs" />
     <Compile Include="ViewModels\SocialMediaListViewModel.cs" />
-    <Compile Include="ViewModels\Twitter\TwitterDictionary.cs" />
-    <Compile Include="ViewModels\Twitter\TwitterPostResults.cs" />
-    <Compile Include="ViewModels\Twitter\IOpenAuthenticate.cs" />
-    <Compile Include="ViewModels\Twitter\OpenAuthenticate.cs" />
-    <Compile Include="ViewModels\Twitter\TwitterOAuthenticate.cs" />
     <Compile Include="Views\SocialMediaList.xaml.cs">
       <DependentUpon>SocialMediaList.xaml</DependentUpon>
     </Compile>
@@ -186,7 +176,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
