@@ -4,12 +4,12 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Socialet.ViewModels.OAuthenticate;
+using ClientLibrary.Authentication.OAuthenticate;
 using Windows.Security.Authentication.Web;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 
-namespace Socialet.ViewModels.Twitter
+namespace ClientLibrary.SocialMedia.Twitter
 {
     public class TwitterOAuth : OpenAuthenticate
     {

@@ -128,7 +128,6 @@
     <Compile Include="Common\LayoutAwarePage.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="ViewModels\AuthenticableSocialNetWorkViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\FaceBookViewModel.cs" />
     <Compile Include="ViewModels\TwitterViewModel.cs" />

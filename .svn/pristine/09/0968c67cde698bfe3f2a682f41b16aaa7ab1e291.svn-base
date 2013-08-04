@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Socialet.ViewModels.Twitter
+namespace ClientLibrary.SocialMedia.Twitter
 {
     public class TwitterPostResults
     {

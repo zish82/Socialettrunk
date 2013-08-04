@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Socialet.ViewModels.Twitter
+namespace ClientLibrary.SocialMedia.Twitter
 {
     public class TwitterDictionary : SortedDictionary<string, string>
     {

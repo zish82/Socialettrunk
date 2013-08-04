@@ -1,0 +1,23 @@
+﻿using ClientLibrary.SocialMedia.Twitter;
+
+namespace Socialet.ViewModels
+{
+    public class TwitterViewModel : SocialNetworkViewModel
+    {
+        private readonly IOpenAuthenticate openAuthenticate;
+        //private Twitter twitter;
+
+        public TwitterViewModel(IOpenAuthenticate openAuthenticate)
+        {
+            this.openAuthenticate = openAuthenticate;
+            Title = "Twitter";
+            SubTitle = "Register your Twitter account for tweeeeeting!";
+            //twitter = new Twitter("my tweet");
+        }
+
+        public override void Authenticate()
+        {
+            openAuthenticate.Authenticate();
+        }
+    }
+}

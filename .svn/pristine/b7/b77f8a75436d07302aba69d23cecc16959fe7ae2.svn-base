@@ -21,13 +21,12 @@ namespace Socialet.Views
 
         public SocialMediaList()
         {
-            //socialNetworks.Add(new TwitterViewModel(new TwitterOAuth(new SendData())));
-            socialNetworks.Add(new TwitterViewModel(new Twitter(new TwitterOAuth(new SendData()))));
+            socialNetworks.Add(new TwitterViewModel(new TwitterOAuth(new SendData())));
             //socialNetworks.Add(new FaceBookViewModel());
             this.InitializeComponent();
         }
 
-        public AuthenticableSocialNetWorkViewModel SelectedSocialNetwork { get; set; }
+        public SocialNetworkViewModel SelectedSocialNetwork { get; set; }
         private readonly ObservableCollection<SocialNetworkViewModel> socialNetworks = new ObservableCollection<SocialNetworkViewModel>();
 
         /// <summary>
@@ -50,7 +49,7 @@ namespace Socialet.Views
         {
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            SelectedSocialNetwork = ((AuthenticableSocialNetWorkViewModel)e.ClickedItem);
+            SelectedSocialNetwork = ((SocialNetworkViewModel)e.ClickedItem);
             SelectedSocialNetwork.Authenticate();
             //txtResult.Text = SelectedSocialNetwork.AuthenticationResult.ToString();
         }
