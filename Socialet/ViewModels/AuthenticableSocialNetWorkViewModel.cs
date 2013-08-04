@@ -6,7 +6,8 @@ namespace Socialet.ViewModels
     {
         public new readonly IAmSocialNetworkAndICanAuthenticate SocialNetwork;
 
-        protected AuthenticableSocialNetWorkViewModel(IAmSocialNetworkAndICanAuthenticate socialNetwork) :base(socialNetwork)
+        protected AuthenticableSocialNetWorkViewModel(IAmSocialNetworkAndICanAuthenticate socialNetwork) 
+            :base(socialNetwork)
         {
             SocialNetwork = socialNetwork;
         }
@@ -14,6 +15,10 @@ namespace Socialet.ViewModels
         public void Authenticate()
         {
             SocialNetwork.Authenticate();
+        }
+
+        public bool IsAuthenticated {
+            get { return SocialNetwork.AuthenticatedCredentials != null; }
         }
     }
 }
