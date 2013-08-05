@@ -6,11 +6,12 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ClientLibrary.Authentication.OAuthenticate;
 using ClientLibrary.Credentials;
+using ClientLibrary.SocialMedia.Twitter;
 using Windows.Security.Authentication.Web;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 
-namespace ClientLibrary.SocialMedia.Twitter
+namespace ClientLibrary.Authentication
 {
     public class TwitterOAuth : OpenAuthenticate
     {
@@ -89,7 +90,7 @@ namespace ClientLibrary.SocialMedia.Twitter
                                 }
                             }
                             TwitterPostResults accessTokenResult = await GetAccessToken(oauthToken, authVerifier);
-                            oauthToken = accessTokenResult.Dictionary["oauth_token_secret"];
+                            oauthToken = accessTokenResult.Dictionary["oauth_token"];
                             accessToken = accessTokenResult.Dictionary["oauth_token_secret"];
                             var credentials = new TwitterCredentials();
                             credentials.SaveCredential(oauthToken, accessToken);
@@ -125,6 +126,11 @@ namespace ClientLibrary.SocialMedia.Twitter
         {
             //oauth_token = "66644379-Ig1ctJ9mMlMIcTdGkhbRfSPF0PAWeTu90wriHoIfJ";
             //oauth_token_secret = "EwiEa9jbFwx1BZuHp0HiL2bRFmlS46lFq1Q1LkfAaM";
+            var credentials = new TwitterCredentials();
+            var tokenAndSecret = credentials.GetCredential();
+            oauthToken = tokenAndSecret.Item1;
+            accessToken = tokenAndSecret.Item2;
+
             const string resourceUrl = "https://api.twitter.com/1.1/statuses/update.json";
 
             const string baseFormat = "oauth_consumer_key={0}&oauth_nonce={1}&oauth_signature_method={2}" +
@@ -177,8 +183,6 @@ namespace ClientLibrary.SocialMedia.Twitter
         {
             try
             {
-                //var postBody = "screen_name=" + Uri.EscapeDataString("zish");//
-
                 var request = (HttpWebRequest) WebRequest.Create(url);
                 request.Method = "POST";
                 request.Headers["Authorization"] = headers;

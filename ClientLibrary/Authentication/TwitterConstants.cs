@@ -1,4 +1,4 @@
-﻿namespace ClientLibrary.SocialMedia.Twitter
+﻿namespace ClientLibrary.Authentication
 {
     public static class TwitterConstants
     {

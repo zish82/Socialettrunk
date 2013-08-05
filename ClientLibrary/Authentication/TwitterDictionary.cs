@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClientLibrary.SocialMedia.Twitter
+namespace ClientLibrary.Authentication
 {
     public class TwitterDictionary : SortedDictionary<string, string>
     {
