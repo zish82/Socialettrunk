@@ -13,4 +13,16 @@ namespace Socialet.ViewModels
             //twitter = new Twitter("my tweet");
         }
     }
+    
+    public class InstagramViewModel : AuthenticableSocialNetWorkViewModel
+    {
+        //private Twitter twitter;
+
+        public InstagramViewModel(IAmSocialNetworkAndICanAuthenticate socialNetwork)
+            : base(socialNetwork)
+        {
+            Title = "instagram";
+            //twitter = new Twitter("my tweet");
+        }
+    }
 }

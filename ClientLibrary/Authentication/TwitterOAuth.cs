@@ -94,7 +94,7 @@ namespace ClientLibrary.Authentication
                             accessToken = accessTokenResult.Dictionary["oauth_token_secret"];
                             var credentials = new TwitterCredentials();
                             credentials.SaveCredential(oauthToken, accessToken);
-                            return new OpenAuthenticationResult()
+                            return new OpenAuthenticationResult
                                 {
                                     Credentials = credentials,
                                     WebAuthenticationResult = webAuthenticationResult.ResponseStatus

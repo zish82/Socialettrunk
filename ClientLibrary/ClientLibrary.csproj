@@ -99,6 +99,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Authentication\InstagramOAuth.cs" />
     <Compile Include="Authentication\OAuthenticate\ISendData.cs" />
     <Compile Include="Authentication\OAuthenticate\SendData.cs" />
     <Compile Include="Credentials\StoreCredentials.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SocialMedia\Facebook\Facebook.cs" />
     <Compile Include="Authentication\FacebookOAuth.cs" />
+    <Compile Include="SocialMedia\Instagram\Instagram.cs" />
     <Compile Include="SocialMedia\Twitter\BaseEntity.cs" />
     <Compile Include="SocialMedia\IAmSocialNetwork.cs" />
     <Compile Include="SocialMedia\Twitter\IOpenAuthenticate.cs" />

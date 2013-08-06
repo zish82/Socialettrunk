@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using ClientLibrary.Authentication;
 using ClientLibrary.Authentication.OAuthenticate;
 using ClientLibrary.SocialMedia.Facebook;
+using ClientLibrary.SocialMedia.Instagram;
 using ClientLibrary.SocialMedia.Twitter;
 using Socialet.ViewModels;
 using Windows.UI.Xaml;
@@ -25,6 +26,7 @@ namespace Socialet.Views
         {
             socialNetworks.Add(new TwitterViewModel(new Twitter(new TwitterOAuth(new SendData()))));
             socialNetworks.Add(new FaceBookViewModel(new Facebook(new FacebookOAuth())));
+            socialNetworks.Add(new InstagramViewModel(new Instagram(new InstagramOAuth())));
             this.InitializeComponent();
         }
 

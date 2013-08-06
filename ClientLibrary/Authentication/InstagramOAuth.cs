@@ -1,49 +1,36 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ClientLibrary.Credentials;
 using ClientLibrary.SocialMedia.Twitter;
-using Facebook;
 using Windows.Security.Authentication.Web;
 
 namespace ClientLibrary.Authentication
 {
-    public class FacebookOAuth : IOpenAuthenticate
+    public class InstagramOAuth : IOpenAuthenticate
     {
-        private string FacebookAppID = "334764598835";
-        private string appSecret = "b2bd2f23e54660b531304d870513aa97";
-        private string FacebookCallbackUrl = "https://www.facebook.com/connect/login_success.html";
+        private string ClientID = "373edc327a1341dfa0f47df912490084";
+        private string clientSecret = "6f58af754ab44a3489019875ee596d74";
+        private string redirectUri = " 	https://192.168.0.1/socialet";
 
         internal static string AccessToken = String.Empty;
-        internal static string FacebookId = String.Empty;
+        internal static string InstagramId = String.Empty;
         public static bool isAuthenticated = false;
-        public FacebookClient FacebookSessionClient;
-        
 
         public async Task<OpenAuthenticationResult> Authenticate()
         {
-            //FacebookSessionClient client = new FacebookSessionClient();
-            FacebookSessionClient = new FacebookClient(FacebookAppID);
+            //InstagramSessionClient client = new InstagramSessionClient();
 
-            if (FacebookAppID == "")
-            {
-                //rootPage.NotifyUser("Please enter an Client ID.", NotifyType.StatusMessage);
-            }
-            else if (FacebookCallbackUrl == "")
-            {
-                //rootPage.NotifyUser("Please enter an Callback URL.", NotifyType.StatusMessage);
-            }
 
             try
             {
-                String FacebookURL = string.Format("https://www.facebook.com/dialog/oauth?client_id={0}&redirect_uri={1}&scope={2}", 
-                    Uri.EscapeDataString(FacebookAppID),
-                    Uri.EscapeDataString(FacebookCallbackUrl),
-                    "publish_actions&display=popup&response_type=token");
+                String InstagramURL = string.Format("https://api.instagram.com/oauth/authorize/?client_id={0}&redirect_uri={1}&response_type=code", 
+                    Uri.EscapeDataString(ClientID),
+                    Uri.EscapeDataString(redirectUri)
+                    );
                 //,publish_actions,publish_stream,read_friendlist
-                System.Uri StartUri = new Uri(FacebookURL);
-                System.Uri EndUri = new Uri(FacebookCallbackUrl);
+                System.Uri StartUri = new Uri(InstagramURL);
+                System.Uri EndUri = new Uri(redirectUri);
 
-                //DebugPrint("Navigating to: " + FacebookURL);
+                //DebugPrint("Navigating to: " + InstagramURL);
 
                 var webAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(
                                                         WebAuthenticationOptions.None,
@@ -59,14 +46,14 @@ namespace ClientLibrary.Authentication
                         var splits = parameter.Split('=');
                         if(splits[0].Contains("access_token"))
                         {
-                                accessToken = splits[1];
-                                var credentials = new FacebookCredentials();
-                                credentials.SaveCredential(credentials.CredentialName, accessToken);
-                                return new OpenAuthenticationResult()
-                                {
-                                    Credentials = credentials,
-                                    WebAuthenticationResult = webAuthenticationResult.ResponseStatus
-                                };
+                                //accessToken = splits[1];
+                                //var credentials = new InstagramCredentials();
+                                //credentials.SaveCredential(credentials.CredentialName, accessToken);
+                                //return new OpenAuthenticationResult()
+                                //{
+                                //    Credentials = credentials,
+                                //    WebAuthenticationResult = webAuthenticationResult.ResponseStatus
+                                //};
                         }
                     }
 

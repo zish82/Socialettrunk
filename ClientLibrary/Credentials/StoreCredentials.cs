@@ -9,7 +9,7 @@ namespace ClientLibrary.Credentials
     {
         ////using Windows.Security.Credentials;
         //private string credentialName { get; set; }
-        protected abstract string CredentialName { get; set; }
+        public string CredentialName { get; set; }
 
         public void SaveCredential(string userName, string password)
         {
