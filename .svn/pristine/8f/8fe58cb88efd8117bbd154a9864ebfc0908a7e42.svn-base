@@ -1,0 +1,29 @@
+﻿using ClientLibrary.Credentials;
+using ClientLibrary.SocialMedia.Twitter;
+
+namespace ClientLibrary.SocialMedia.Instagram
+{
+    public class Instagram  : IAmSocialNetworkAndICanAuthenticate
+    {
+        private readonly IOpenAuthenticate instagramOAuth;
+
+        public Instagram(IOpenAuthenticate instagramOAuth)
+        {
+            this.instagramOAuth = instagramOAuth;
+        }
+
+        public PostingResult Post(string post)
+        {
+            return new PostingResult();
+        }
+
+        public IOpenAuthenticate OpenAuthenticate { get; set; }
+        public IStoreCredentials AuthenticatedCredentials { get; set; }
+        
+        public void Authenticate()
+        {
+            var fbCredentials = instagramOAuth.Authenticate().Result;
+            
+        }
+    }
+}

@@ -21,7 +21,8 @@ namespace ClientLibrary.Authentication
 
         public async Task<OpenAuthenticationResult> Authenticate()
         {
-            //FacebookSessionClient = new FacebookClient(FacebookAppID);
+            //FacebookSessionClient client = new FacebookSessionClient();
+            FacebookSessionClient = new FacebookClient(FacebookAppID);
 
             if (FacebookAppID == "")
             {
@@ -37,7 +38,7 @@ namespace ClientLibrary.Authentication
                 String FacebookURL = string.Format("https://www.facebook.com/dialog/oauth?client_id={0}&redirect_uri={1}&scope={2}", 
                     Uri.EscapeDataString(FacebookAppID),
                     Uri.EscapeDataString(FacebookCallbackUrl),
-                    "read_stream&display=popup&response_type=token");
+                    "publish_actions&display=popup&response_type=token");
                 //,publish_actions,publish_stream,read_friendlist
                 System.Uri StartUri = new Uri(FacebookURL);
                 System.Uri EndUri = new Uri(FacebookCallbackUrl);

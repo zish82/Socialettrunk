@@ -5,11 +5,11 @@ using Windows.Security.Authentication.Web;
 
 namespace ClientLibrary.Authentication
 {
-    public class InstagramOAuth : IOpenAuthenticate
+    public class GooglePlusOAuth : IOpenAuthenticate
     {
-        private string ClientID = "373edc327a1341dfa0f47df912490084";
-        private string clientSecret = "6f58af754ab44a3489019875ee596d74";
-        private string redirectUri = "https://192.168.0.1/socialet";
+        private string ClientID = "";
+        private string clientSecret = "";
+        private string redirectUri = "";
 
         internal static string AccessToken = String.Empty;
         internal static string InstagramId = String.Empty;
@@ -17,14 +17,11 @@ namespace ClientLibrary.Authentication
 
         public async Task<OpenAuthenticationResult> Authenticate()
         {
-            //InstagramSessionClient client = new InstagramSessionClient();
-
-
             try
             {
-                String InstagramURL = string.Format("https://api.instagram.com/oauth/authorize/?client_id={0}&redirect_uri={1}&response_type=code", 
-                    Uri.EscapeDataString(ClientID),
-                    Uri.EscapeDataString(redirectUri)
+                String InstagramURL = string.Format("", 
+                                                    Uri.EscapeDataString(ClientID),
+                                                    Uri.EscapeDataString(redirectUri)
                     );
                 //,publish_actions,publish_stream,read_friendlist
                 System.Uri StartUri = new Uri(InstagramURL);
@@ -33,9 +30,9 @@ namespace ClientLibrary.Authentication
                 //DebugPrint("Navigating to: " + InstagramURL);
 
                 var webAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(
-                                                        WebAuthenticationOptions.None,
-                                                        StartUri,
-                                                        EndUri);
+                    WebAuthenticationOptions.None,
+                    StartUri,
+                    EndUri);
                 if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
                 {
                     string accessToken = null;
@@ -46,14 +43,14 @@ namespace ClientLibrary.Authentication
                         var splits = parameter.Split('=');
                         if(splits[0].Contains("access_token"))
                         {
-                                //accessToken = splits[1];
-                                //var credentials = new InstagramCredentials();
-                                //credentials.SaveCredential(credentials.CredentialName, accessToken);
-                                //return new OpenAuthenticationResult()
-                                //{
-                                //    Credentials = credentials,
-                                //    WebAuthenticationResult = webAuthenticationResult.ResponseStatus
-                                //};
+                            //accessToken = splits[1];
+                            //var credentials = new InstagramCredentials();
+                            //credentials.SaveCredential(credentials.CredentialName, accessToken);
+                            //return new OpenAuthenticationResult()
+                            //{
+                            //    Credentials = credentials,
+                            //    WebAuthenticationResult = webAuthenticationResult.ResponseStatus
+                            //};
                         }
                     }
 

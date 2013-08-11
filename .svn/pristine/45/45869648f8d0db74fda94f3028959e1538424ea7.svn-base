@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using ClientLibrary.Authentication;
 using ClientLibrary.Authentication.OAuthenticate;
 using ClientLibrary.SocialMedia.Facebook;
-using ClientLibrary.SocialMedia.GooglePlus;
 using ClientLibrary.SocialMedia.Instagram;
 using ClientLibrary.SocialMedia.Twitter;
 using Socialet.ViewModels;
@@ -28,7 +27,6 @@ namespace Socialet.Views
             socialNetworks.Add(new TwitterViewModel(new Twitter(new TwitterOAuth(new SendData()))));
             socialNetworks.Add(new FaceBookViewModel(new Facebook(new FacebookOAuth())));
             socialNetworks.Add(new InstagramViewModel(new Instagram(new InstagramOAuth())));
-            socialNetworks.Add(new GooglePlusViewModel(new GooglePlus(new GooglePlusOAuth())));
             this.InitializeComponent();
         }
 

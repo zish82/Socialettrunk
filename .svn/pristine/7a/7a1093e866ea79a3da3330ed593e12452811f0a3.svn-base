@@ -4,18 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{68242217-3DE0-44B2-A56A-60B7A9C7C7C6}</ProjectGuid>
-    <OutputType>AppContainerExe</OutputType>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{12F2D0EE-C264-4E31-B7A7-0C0735F67D1A}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Socialet</RootNamespace>
-    <AssemblyName>Socialet</AssemblyName>
+    <RootNamespace>ClientLibrary</RootNamespace>
+    <AssemblyName>ClientLibrary</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>Socialet_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,7 +25,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -100,99 +99,38 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\ClientLibrary\ClientLibrary.csproj">
-      <Project>{12f2d0ee-c264-4e31-b7a7-0c0735f67d1a}</Project>
-      <Name>ClientLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Common\SocialetBindableBase.cs" />
-    <Compile Include="GroupedItemsPage.xaml.cs">
-      <DependentUpon>GroupedItemsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GroupDetailPage.xaml.cs">
-      <DependentUpon>GroupDetailPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ItemDetailPage.xaml.cs">
-      <DependentUpon>ItemDetailPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Authentication\InstagramOAuth.cs" />
+    <Compile Include="Authentication\OAuthenticate\ISendData.cs" />
+    <Compile Include="Authentication\OAuthenticate\SendData.cs" />
+    <Compile Include="Credentials\StoreCredentials.cs" />
+    <Compile Include="Credentials\IStoreCredentials.cs" />
+    <Compile Include="Credentials\TwitterCredentials.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataModel\SampleDataSource.cs" />
-    <Compile Include="Common\BindableBase.cs" />
-    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Common\BooleanNegationConverter.cs" />
-    <Compile Include="Common\LayoutAwarePage.cs" />
-    <Compile Include="Common\RichTextColumns.cs" />
-    <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="ViewModels\AuthenticableSocialNetWorkViewModel.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\FaceBookViewModel.cs" />
-    <Compile Include="ViewModels\GooglePlusViewModel.cs" />
-    <Compile Include="ViewModels\TwitterViewModel.cs" />
-    <Compile Include="ViewModels\ISocialNetworkViewModel.cs" />
-    <Compile Include="ViewModels\SocialNetworkViewModel.cs" />
-    <Compile Include="ViewModels\SocialMediaListViewModel.cs" />
-    <Compile Include="Views\PostPage.xaml.cs">
-      <DependentUpon>PostPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SocialMediaList.xaml.cs">
-      <DependentUpon>SocialMediaList.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="SocialMedia\Facebook\Facebook.cs" />
+    <Compile Include="Authentication\FacebookOAuth.cs" />
+    <Compile Include="SocialMedia\Instagram\Instagram.cs" />
+    <Compile Include="SocialMedia\Twitter\BaseEntity.cs" />
+    <Compile Include="SocialMedia\IAmSocialNetwork.cs" />
+    <Compile Include="SocialMedia\Twitter\IOpenAuthenticate.cs" />
+    <Compile Include="SocialMedia\Twitter\OpenAuthenticate.cs" />
+    <Compile Include="SocialMedia\Twitter\PostingResult.cs" />
+    <Compile Include="SocialMedia\Twitter\Tweet.cs" />
+    <Compile Include="SocialMedia\Twitter\Twitter.cs" />
+    <Compile Include="Authentication\TwitterConstants.cs" />
+    <Compile Include="Authentication\TwitterDictionary.cs" />
+    <Compile Include="Authentication\TwitterOAuth.cs" />
+    <Compile Include="SocialMedia\Twitter\TwitterPostResults.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest">
-      <SubType>Designer</SubType>
-    </AppxManifest>
-    <None Include="Common\ReadMe.txt" />
-    <None Include="Socialet_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\Logo.png" />
-    <Content Include="Assets\SmallLogo.png" />
-    <Content Include="Assets\SplashScreen.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\LightGray.png" />
-    <Content Include="Assets\MediumGray.png" />
-    <Content Include="Assets\DarkGray.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="Common\StandardStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GroupedItemsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GroupDetailPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ItemDetailPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PostPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SocialMediaList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
+    <Reference Include="Facebook">
+      <HintPath>..\packages\Facebook.6.4.2\lib\win8\Facebook.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity.NetCore">
       <HintPath>..\packages\Unity.3.0.1304.0\lib\NetCore45\Microsoft.Practices.Unity.NetCore.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
