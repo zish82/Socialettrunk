@@ -7,9 +7,9 @@ namespace ClientLibrary.Authentication
 {
     public class GooglePlusOAuth : IOpenAuthenticate
     {
-        private string ClientID = "";
-        private string clientSecret = "";
-        private string redirectUri = "";
+        private string ClientID = "105393905968.apps.googleusercontent.com";
+        private string clientSecret = "xv1c7bumpYGc0BuQg9jhCvc_";
+        private string redirectUri = "http://localhost";
 
         internal static string AccessToken = String.Empty;
         internal static string InstagramId = String.Empty;
@@ -19,13 +19,14 @@ namespace ClientLibrary.Authentication
         {
             try
             {
-                String InstagramURL = string.Format("", 
+                String GooglePlusURL = string.Format("https://accounts.google.com/o/oauth2/auth?client_id={0}&redirect_uri={1}&response_type=code&scope={2}", 
                                                     Uri.EscapeDataString(ClientID),
-                                                    Uri.EscapeDataString(redirectUri)
+                                                    Uri.EscapeDataString(redirectUri),
+                                                    Uri.EscapeDataString("https://www.googleapis.com/auth/plus.me")
                     );
                 //,publish_actions,publish_stream,read_friendlist
-                System.Uri StartUri = new Uri(InstagramURL);
-                System.Uri EndUri = new Uri(redirectUri);
+                var StartUri = new Uri(GooglePlusURL);
+                var EndUri = new Uri(redirectUri);
 
                 //DebugPrint("Navigating to: " + InstagramURL);
 

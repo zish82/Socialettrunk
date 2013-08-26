@@ -22,7 +22,7 @@ namespace ClientLibrary.SocialMedia.GooglePlus
         
         public void Authenticate()
         {
-           
+            var result = oAuth.Authenticate().Result;
         }
     }
 }
