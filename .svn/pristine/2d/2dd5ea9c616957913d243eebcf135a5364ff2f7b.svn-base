@@ -1,0 +1,85 @@
+﻿using System;
+using System.Threading.Tasks;
+using ClientLibrary.SocialMedia.Twitter;
+using Windows.Security.Authentication.Web;
+
+namespace ClientLibrary.Authentication
+{
+    public class GooglePlusOAuth : IOpenAuthenticate
+    {
+        private string ClientID = "105393905968.apps.googleusercontent.com";
+        private string clientSecret = "xv1c7bumpYGc0BuQg9jhCvc_";
+        private string redirectUri = "http://localhost";
+
+        internal static string AccessToken = String.Empty;
+        internal static string InstagramId = String.Empty;
+        public static bool isAuthenticated = false;
+
+        public async Task<OpenAuthenticationResult> Authenticate()
+        {
+            try
+            {
+                String GooglePlusURL = string.Format("https://accounts.google.com/o/oauth2/auth?client_id={0}&redirect_uri={1}&response_type=code&scope={2}", 
+                                                    Uri.EscapeDataString(ClientID),
+                                                    Uri.EscapeDataString(redirectUri),
+                                                    Uri.EscapeDataString("https://www.googleapis.com/auth/plus.me")
+                    );
+                //,publish_actions,publish_stream,read_friendlist
+                var StartUri = new Uri(GooglePlusURL);
+                var EndUri = new Uri(redirectUri);
+
+                //DebugPrint("Navigating to: " + InstagramURL);
+
+                var webAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(
+                    WebAuthenticationOptions.None,
+                    StartUri,
+                    EndUri);
+                if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
+                {
+                    string accessToken = null;
+                    var accessTokenkeyValPairs = webAuthenticationResult.ResponseData.Split('&');
+
+                    foreach (string parameter in accessTokenkeyValPairs)
+                    {
+                        var splits = parameter.Split('=');
+                        if(splits[0].Contains("access_token"))
+                        {
+                            //accessToken = splits[1];
+                            //var credentials = new InstagramCredentials();
+                            //credentials.SaveCredential(credentials.CredentialName, accessToken);
+                            //return new OpenAuthenticationResult()
+                            //{
+                            //    Credentials = credentials,
+                            //    WebAuthenticationResult = webAuthenticationResult.ResponseStatus
+                            //};
+                        }
+                    }
+
+                    
+                }
+                else if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.ErrorHttp)
+                {
+                    //OutputToken("HTTP Error returned by AuthenticateAsync() : " + WebAuthenticationResult.ResponseErrorDetail.ToString());
+                }
+                else
+                {
+                    //OutputToken("Error returned by AuthenticateAsync() : " + WebAuthenticationResult.ResponseStatus.ToString());
+                }
+            }
+            catch (Exception Error)
+            {
+                // 
+                // Bad Parameter, SSL/TLS Errors and Network Unavailable errors are to be handled here. 
+                // 
+                //DebugPrint(Error.ToString());
+            }
+            return null;
+        }
+
+        //remove this method from here, it does not look right here
+        public void Post(string thisIsATestTweet)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

@@ -43,7 +43,8 @@
             Padding="116,136,116,46"
             ItemsSource="{Binding Source={StaticResource itemsViewSource}}"
             ItemTemplate="{StaticResource Standard250x250ItemTemplate}"
-            SelectionMode="None"
+            SelectionMode="Multiple"
+            SelectedValue="{Binding IsAuthenticated}"
             IsSwipeEnabled="false"
             IsItemClickEnabled="True"
             ItemClick="ItemView_ItemClick"/>
