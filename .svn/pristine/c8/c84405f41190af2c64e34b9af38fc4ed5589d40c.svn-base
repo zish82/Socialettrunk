@@ -1,0 +1,12 @@
+﻿using ClientLibrary.Credentials;
+using ClientLibrary.SocialMedia.Twitter;
+
+namespace ClientLibrary.SocialMedia
+{
+    public interface IAmSocialNetworkAndICanAuthenticate : IAmSocialNetwork
+    {
+        IOpenAuthenticate OpenAuthenticate { get; set; }
+        IStoreCredentials AuthenticatedCredentials { get; set; }
+        void Authenticate();
+    }
+}
