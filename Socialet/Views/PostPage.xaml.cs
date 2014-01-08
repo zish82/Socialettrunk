@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using ClientLibrary.SocialMedia.Twitter;
 using Microsoft.Practices.ObjectBuilder2;
 using Socialet.Common;
@@ -48,7 +47,7 @@ namespace Socialet.Views
             DefaultViewModel["Items"] = socialNetworks;
             AuthenticableSocialNetWorkViewModel authenticableSocialNetWorkViewModel = socialNetworks.First();
 
-            IEnumerable<TweetViewModel> tweetViewModels = await authenticableSocialNetWorkViewModel.GetTweets();
+            IEnumerable<TweetViewModel> tweetViewModels = await authenticableSocialNetWorkViewModel.GetPosts();
             DefaultViewModel["TweetsSource"] = tweetViewModels;
         }
 
@@ -59,7 +58,7 @@ namespace Socialet.Views
             EnumerableExtensions.ForEach(authenticableSocialNetWorkViewModels, (x) =>
                 {
                     socialNetworks.Add(x);
-                    //EnumerableExtensions.ForEach<TweetViewModel>((x.GetTweets()), y => tweets.Add(y));
+                    //EnumerableExtensions.ForEach<TweetViewModel>((x.GetPosts()), y => tweets.Add(y));
                 });
         }
 
