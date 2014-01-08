@@ -3,7 +3,7 @@ using Socialet.Common;
 
 namespace Socialet.ViewModels
 {
-    public class TweetViewModel : BindableBase
+    public class PostViewModel : BindableBase
     {
         public string Message { get; set; }
         public DateTime Date { get; set; }
