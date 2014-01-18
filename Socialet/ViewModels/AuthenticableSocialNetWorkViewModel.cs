@@ -17,12 +17,12 @@ namespace Socialet.ViewModels
         public virtual void Authenticate()
         {
             SocialNetwork.Authenticate();
-            IsAuthenticated = true;
+            OnPropertyChanged("AuthenticationStatus");
         }
 
         public bool IsAuthenticated
         {
-            get { return isAuthenticated; }
+            get { return SocialNetwork.IsAuthenticated; }
             set
             {
                 isAuthenticated = value; 
@@ -37,7 +37,7 @@ namespace Socialet.ViewModels
         public void ClearAuthentication()
         {
             SocialNetwork.ClearAuthentication();
-            IsAuthenticated = false;
+            OnPropertyChanged("AuthenticationStatus");
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Socialet.Views
                 return;
             }
             SelectedSocialNetwork.Authenticate();
-            SelectedSocialNetwork.IsAuthenticated = true;
+            //SelectedSocialNetwork.IsAuthenticated = true;
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)

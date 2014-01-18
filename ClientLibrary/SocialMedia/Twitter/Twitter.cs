@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
@@ -41,7 +40,7 @@ namespace ClientLibrary.SocialMedia.Twitter
                 return AuthenticatedCredentials.GetCredential() != null;
             }
         }
-
+        
         public async Task<PostingResult> Post(string post)
         {
             return await OpenAuthenticate.Post(post, StatusUpdateUrl);
@@ -53,17 +52,16 @@ namespace ClientLibrary.SocialMedia.Twitter
             var header = GetStatuses(UserTimeLineUrl);// GetHeader(UserTimeLineUrl);
         }
 
-        public void Authenticate()
+        public async void Authenticate()
         {
-            var result = OpenAuthenticate.Authenticate();
-            if (result.IsCompleted && result.Result.WebAuthenticationResult == WebAuthenticationStatus.Success)
-                AuthenticatedCredentials = result.Result.Credentials;
+            var result = await OpenAuthenticate.Authenticate();
+            if (result.WebAuthenticationResult == WebAuthenticationStatus.Success)
+                AuthenticatedCredentials = result.Credentials;
         }
 
         public void ClearAuthentication()
         {
             AuthenticatedCredentials.RemoveCredential();
-            
         }
 
         //public string GetHeader(string resourceUrl)
@@ -122,8 +120,7 @@ namespace ClientLibrary.SocialMedia.Twitter
         //    resourceUrl += "?" + authHeader
         //    return authHeader;
         //}
-
-
+        
         public async Task<IList<RootObject>> GetStatuses(string resourceUrl)
         {
             resourceUrl = UserTimeLineUrl;

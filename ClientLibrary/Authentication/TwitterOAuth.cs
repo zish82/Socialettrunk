@@ -122,6 +122,10 @@ namespace ClientLibrary.Authentication
                 // Bad Parameter, SSL/TLS Errors and Network Unavailable errors are to be handled here.
                 //
                 //DebugPrint(Error.ToString());
+                return new OpenAuthenticationResult
+                {
+                   
+                };
             }
 
             return null;
